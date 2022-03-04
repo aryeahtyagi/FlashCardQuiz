@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.atria.software.flashcardquiz.ui.flightmaster.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="com.atria.software.flashcardquiz.ui.flightmaster.OtpFragment"
+        android:label="fragment_otp"
+        tools:layout="@layout/fragment_otp" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.atria.software.flashcardquiz.ui.flightmaster.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/confirmQuizFragment"
+        android:name="com.atria.software.flashcardquiz.ui.flightmaster.ConfirmQuizFragment"
+        android:label="fragment_confirm_quiz"
+        tools:layout="@layout/fragment_confirm_quiz" />
+    <fragment
+        android:id="@+id/subjectFragment"
+        android:name="com.atria.software.flashcardquiz.ui.flightmaster.SubjectFragment"
+        android:label="fragment_subject"
+        tools:layout="@layout/fragment_subject" />
+</navigation>
