@@ -1,7 +1,6 @@
 Initial Commit
 1. ✔️flight master package containing ui
 2. include code
-  ** 
    <include
    android:id="@+id/include"
    layout="@layout/bubbles_effect"
@@ -11,5 +10,5 @@ Initial Commit
    app:layout_constraintEnd_toEndOf="parent"
    app:layout_constraintStart_toStartOf="parent"
    app:layout_constraintTop_toTopOf="parent" />
-   **
+   
    
