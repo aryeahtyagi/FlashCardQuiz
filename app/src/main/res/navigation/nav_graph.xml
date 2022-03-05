@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/quizFragment">
+    app:startDestination="@id/resultFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -35,4 +35,9 @@
         android:name="com.atria.software.flashcardquiz.ui.blockbuster.QuizFragment"
         android:label="fragment_quiz"
         tools:layout="@layout/fragment_quiz" />
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.atria.software.flashcardquiz.ui.blockbuster.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" />
 </navigation>

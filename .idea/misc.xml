@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/drawable/card_border.xml" value="0.13" />
+        <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/drawable/circle_red.xml" value="0.13" />
+        <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/drawable/ic_next_btn.xml" value="0.13" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/drawable/ic_right_button.xml" value="0.13" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/drawable/ic_wallpaper.xml" value="0.13" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/drawable/ic_wrong_btn.xml" value="0.13" />
@@ -14,6 +17,7 @@
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_otp.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_profile.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_quiz.xml" value="0.176" />
+        <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_result.xml" value="0.25" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_subject.xml" value="0.22826086956521738" />
       </map>
     </option>
