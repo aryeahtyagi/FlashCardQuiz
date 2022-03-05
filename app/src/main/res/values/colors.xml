@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="color_bg">#6245CD</color>
+    <color name="progress_color">#DB3254</color>
 
 </resources>
