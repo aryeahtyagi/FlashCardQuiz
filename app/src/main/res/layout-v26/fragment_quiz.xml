@@ -59,8 +59,9 @@
             android:textAlignment="center"
             android:text="What is the full form of UNO?"
             android:textColor="@color/white"
-            android:textSize="39sp"
-            />
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="15sp"
+            android:autoSizeMaxTextSize="39sp" />
 
     </LinearLayout>
 
@@ -90,7 +91,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="190dp"
             android:orientation="vertical"
             app:cardBackgroundColor="#4DE4E4E4"
             app:cardCornerRadius="5dp"
@@ -112,7 +113,11 @@
                 android:text="United Nation organization"
                 android:textAlignment="center"
                 android:textColor="#64FFDA"
-                android:textSize="40sp" />
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="40sp"
+
+                android:autoSizeMinTextSize="15sp"
+                />
         </androidx.cardview.widget.CardView>
 
 
@@ -161,7 +166,10 @@
                 android:layout_weight="1"
                 android:visibility="gone"
                 android:src="@drawable/ic_next_btn"
+
                 />
+
+
 
         </LinearLayout>
 
