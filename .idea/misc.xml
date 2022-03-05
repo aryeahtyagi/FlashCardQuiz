@@ -19,6 +19,23 @@
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_quiz.xml" value="0.176" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_result.xml" value="0.25" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_subject.xml" value="0.22826086956521738" />
+        <entry key="app/src/main/res/drawable/buttonbackground.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/card_border.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/circle_red.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/confirmquiz.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/ic_circle.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/ic_next_btn.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/ic_right_button.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/ic_wrong_btn.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/topicsbackground.xml" value="0.187" />
+        <entry key="app/src/main/res/layout/bubbles_effect.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/fragment_confirm_quiz.xml" value="0.2297734627831715" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.12769784172661872" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.23550724637681159" />
+        <entry key="app/src/main/res/layout/fragment_result.xml" value="0.23550724637681159" />
+        <entry key="app/src/main/res/layout/fragment_subject.xml" value="0.2766337076822917" />
+        <entry key="app/src/main/res/layout/topic_cards.xml" value="0.3949194859976722" />
       </map>
     </option>
   </component>

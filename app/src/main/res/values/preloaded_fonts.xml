@@ -2,6 +2,8 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/amiko</item>
+        <item>@font/charmonman_bold</item>
+        <item>@font/homemade_apple</item>
         <item>@font/poppins_bold</item>
     </array>
 </resources>

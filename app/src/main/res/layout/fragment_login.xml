@@ -18,5 +18,109 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/amiko"
+        android:text="Welcome Back"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/countryCodeSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.731" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/amiko"
+        android:text="Please Enter Your Country code and enter your number."
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/countryCodeSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.2" />
+
+        <EditText
+            android:id="@+id/countryCodeSpinner"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/card_border"
+        android:lines="1"
+            android:text="+91"
+            android:textColor="@color/white"
+        android:digits="1234567890+"
+        android:inputType="textFilter|number"
+        android:maxLength="5"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/info"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0.74"
+/>
+
+        <EditText
+            android:id="@+id/phoneEditText"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/card_border"
+            android:hint="phone number"
+            android:lines="1"
+            android:textColor="@color/white"
+            android:textColorHint="#d0d0d0"
+            android:digits="1234567890"
+            android:inputType="textFilter|number"
+            android:maxLength="10"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/countryCodeSpinner"
+            app:layout_constraintEnd_toEndOf="@+id/info"
+            app:layout_constraintStart_toEndOf="@+id/countryCodeSpinner"
+            app:layout_constraintTop_toTopOf="@+id/countryCodeSpinner" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="121dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="vertical"
+        app:cardBackgroundColor="#4DE4E4E4"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phoneEditText"
+        app:layout_constraintVertical_bias="0.157">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:text="Next"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
