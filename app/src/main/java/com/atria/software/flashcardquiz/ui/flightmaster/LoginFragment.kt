@@ -172,6 +172,8 @@ class LoginFragment : Fragment() {
 
     private fun startPhoneNumberVerification(fullNumber: String) {
         progressDialog.setMessage("Verifying Phone Number...")
+
+
         progressDialog.show()
 
 
