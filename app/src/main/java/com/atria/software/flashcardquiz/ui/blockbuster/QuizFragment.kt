@@ -1,6 +1,7 @@
 package com.atria.software.flashcardquiz.ui.blockbuster
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,9 @@ import com.atria.software.flashcardquiz.ui.blockbuster.viewmodel.QuizFragmentVie
 class QuizFragment : Fragment() {
 
     private var quizFragmentBinding: FragmentQuizBinding? = null
-    private lateinit var quizFragmentViewModel: QuizFragmentViewModel
+    private var quizFragmentViewModel: QuizFragmentViewModel? = null
+
+    private val TAG = "QuizFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,17 +31,22 @@ class QuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         quizFragmentBinding?.let {
+            Log.i(TAG, "onViewCreated: $quizFragmentViewModel")
             quizFragmentViewModel =
                 ViewModelProvider(
-                    viewModelStore,
+                    requireActivity(),
                     QuizFragmentViewModelFactory(
                         it,
                         viewLifecycleOwner
                     )
                 ).get(QuizFragmentViewModel::class.java)
 
-
-            quizFragmentViewModel.setProgress(it.progressBar)
+            quizFragmentViewModel?.setup(_binding = quizFragmentBinding){
+                quizFragmentViewModel?.question_no?.observe(viewLifecycleOwner) {
+                    quizFragmentViewModel?.onObserveTask(it,quizFragmentBinding)
+                }
+            }
+            quizFragmentViewModel?.setProgress(it.progressBar)
         }
     }
 

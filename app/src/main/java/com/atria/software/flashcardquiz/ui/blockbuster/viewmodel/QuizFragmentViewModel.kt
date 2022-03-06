@@ -1,5 +1,6 @@
 package com.atria.software.flashcardquiz.ui.blockbuster.viewmodel
 
+import android.app.Fragment
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -24,7 +25,7 @@ class QuizFragmentViewModel(
 
     private val duration = 10_000L;// 30 sec
     private lateinit var questions: List<Pair<String, String>>
-    private val question_no = MutableLiveData<Int>(1);
+     val question_no = MutableLiveData<Int>(1);
 
     private val wrongQuestionsIndexList = mutableListOf<Int>()
     private var wrongQuestionsCount = 0
@@ -33,60 +34,74 @@ class QuizFragmentViewModel(
     var resultCallback = MutableLiveData<helper.Report>(helper.Report())
         get() = field
 
+    private var progressBar : RoundCornerProgressBar ? = null
+
+    var end_progress = 0f
     @helper.ViewFunctions
-    fun setProgress(bar: RoundCornerProgressBar) {
-        bar.setSmoothProgress(1f, duration = duration) {
-            binding?.wrongAnswerButton?.performClick()
+    fun setProgress(bar: RoundCornerProgressBar?) {
+        if(progressBar !=  null){
+            bar?.stopSmoothProgress()
+        }
+        progressBar = bar
+        progressBar?.setProgress(end_progress)
+        progressBar?.setSmoothProgress(1f, duration = duration) {
             val current_value = question_no.value ?: 0
             question_no.postValue(current_value.plus(1))
-            bar.setProgress(0f)
-            setProgress(bar)
+            progressBar?.setProgress(0f)
+            end_progress = 0f
+            setProgress(progressBar)
         }
     }
 
 
-    init {
+    fun onObserveTask(it:Int,_binding: FragmentQuizBinding?){
+        Log.i(TAG, "setup: ")
+        if (questions.size < it) {
+            // here all questions are completed
+            val report =
+                helper.Report(wrongQuestionsCount, wrongQuestionsIndexList, questions.size)
+            Log.i(TAG, report.toString())
+            resultCallback.postValue(report)
+        } else {
+            _binding?.questionTextView?.text = questions.elementAt(it.minus(1)).first
+            _binding?.answerTextView?.text = questions.elementAt(it.minus(1)).second
+            _binding?.questionNumber?.text = it.toString() + "/" + questions.size.toString()
+        }
+    }
+
+
+    fun setup(_binding:FragmentQuizBinding?,onViewObserver:()->Unit) {
+        if(progressBar!=null){
+            end_progress = progressBar?.getProgress()?:0f
+        }
+        progressBar = _binding?.progressBar
         questions = getQuestionsListFromDatabase() {
-            setTapToReveal()
-            question_no.observe(viewLifecycleOwner) {
-                if (questions.size < it) {
-                    // here all questions are completed
-                    val report =
-                        helper.Report(wrongQuestionsCount, wrongQuestionsIndexList, questions.size)
-                    Log.i(TAG, report.toString())
-                    resultCallback.postValue(report)
-                } else {
-                    binding?.questionTextView?.text = questions.elementAt(it.minus(1)).first
-                    binding?.answerTextView?.text = questions.elementAt(it.minus(1)).second
-                    binding?.questionNumber?.text = it.toString() + "/" + questions.size.toString()
-                }
-            }
+            setTapToReveal(_binding)
+            onViewObserver()
         }
-
     }
-
 
     @helper.ViewFunctions
-    private fun setTapToReveal() {
+    private fun setTapToReveal(_binding: FragmentQuizBinding?) {
         val answerRequestVisibilityBucket = listOf(
-            binding?.answerTextView,
-            binding?.choiceLayout
+            _binding?.answerTextView,
+            _binding?.choiceLayout
         )
-        binding?.cardView?.setOnClickListener {
+        _binding?.cardView?.setOnClickListener {
             answerRequestVisibilityBucket.forEach { it?.visibility = View.VISIBLE }
         }
 
-        binding?.rightAnswerButton?.setOnClickListener {
+        _binding?.rightAnswerButton?.setOnClickListener {
             val current_value = question_no.value ?: 0
-            hideViews()
+            hideViews(_binding)
             question_no.postValue(current_value.plus(1))
         }
 
-        binding?.wrongAnswerButton?.setOnClickListener {
+        _binding?.wrongAnswerButton?.setOnClickListener {
             wrongQuestionsCount += 1
             question_no.value?.let { it1 -> wrongQuestionsIndexList.add(it1) }
             val current_value = question_no.value ?: 0
-            hideViews()
+            hideViews(_binding)
             question_no.postValue(current_value.plus(1))
         }
 
@@ -94,10 +109,10 @@ class QuizFragmentViewModel(
     }
 
     @helper.ViewFunctions
-    private fun hideViews(){
+    private fun hideViews(_binding: FragmentQuizBinding?){
         val answerRequestVisibilityBucket = listOf(
-            binding?.answerTextView,
-            binding?.choiceLayout
+            _binding?.answerTextView,
+            _binding?.choiceLayout
         )
         answerRequestVisibilityBucket.forEach { it?.visibility = View.GONE }
     }
