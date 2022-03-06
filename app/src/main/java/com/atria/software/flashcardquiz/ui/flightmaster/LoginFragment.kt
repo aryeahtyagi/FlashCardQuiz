@@ -1,60 +1,305 @@
 package com.atria.software.flashcardquiz.ui.flightmaster
 
+import android.app.Activity
+import android.app.ProgressDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.CountDownTimer
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.atria.software.flashcardquiz.R
+import com.atria.software.flashcardquiz.cache.OfflineStorage
+import com.atria.software.flashcardquiz.cache.OfflineStorage.getProfileData
+import com.atria.software.flashcardquiz.cache.OfflineStorage.isUserLoggedIn
+import com.atria.software.flashcardquiz.databinding.FragmentLoginBinding
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.rpc.context.AttributeContext
+import java.util.concurrent.TimeUnit
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+     var _binding: FragmentLoginBinding? = null
+     val binding get() = _binding!!
+    var disable: Boolean = false
+    lateinit var conCode: String
+    lateinit var phone: String
+    lateinit var phoneCurrentUser: String
+    lateinit var resend: TextView
+    lateinit var fullNumber: String
+    private var forceResendingToken: PhoneAuthProvider.ForceResendingToken? = null
+    private lateinit var firestore: FirebaseFirestore
+
+    private var mCollBacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
+    private var mVerificationId: String? = null
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var timer: MyCounter
+    private val TAG = "TAGES"
+    private lateinit var progressDialog: ProgressDialog
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        return binding.root
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (isUserLoggedIn) {
+//            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        } else{
+            firebaseAuth = FirebaseAuth.getInstance()
+// set this to remove reCaptcha web
+            firebaseAuth.getFirebaseAuthSettings().setAppVerificationDisabledForTesting(true);
+
+
+            if (firebaseAuth.currentUser != null && context != null) {
+
+                if (getProfileData(requireContext())) {
+//                    Navigation.findNavController(requireView())
+//                        .navigate(R.id.action_loginFragment_to_homeFragment)
+                } else {
+
                 }
             }
+
+            binding.scrollViewPhoneAuth.visibility = View.VISIBLE
+            binding.ScrollViewOTP.visibility = View.GONE
+            timer = MyCounter(60000, 1000)
+
+            resend = view.findViewById(R.id.resend)
+            progressDialog = ProgressDialog(context)
+            progressDialog.setMessage("Please Wait")
+            progressDialog.setCanceledOnTouchOutside(false)
+
+            mCollBacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+
+                override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
+                    signInWithPhoneAuthCredential(phoneAuthCredential)
+                }
+
+                override fun onVerificationFailed(e: FirebaseException) {
+                    progressDialog.dismiss()
+                    binding.phoneBox.error = "Enter Valid Mobile Number"
+                    binding.phoneBox.requestFocus()
+                    Log.d("phoness", "${e.message}")
+                }
+
+                override fun onCodeSent(
+                    verificationId: String,
+                    token: PhoneAuthProvider.ForceResendingToken
+                ) {
+                    Log.d(TAG, "onCodeSend : $verificationId")
+                    mVerificationId = verificationId
+                    forceResendingToken = token
+                    progressDialog.dismiss()
+
+                    //hide phone Auth scrollView
+                    binding.scrollViewPhoneAuth.visibility = View.GONE
+                    binding.ScrollViewOTP.visibility = View.VISIBLE
+
+                    Toast.makeText(context, "Code Send", Toast.LENGTH_SHORT).show()
+                    phoneCurrentUser = binding.phoneBox.text.toString()
+                    binding.textView5.text = "+91${binding.phoneBox.text}"
+                    timer.start()
+                }
+            }
+
+            //Phone Get Otp
+            binding.otpBtn.setOnClickListener {
+                conCode = binding.conCode.text.toString()
+                phone = binding.phoneBox.text.toString()
+                fullNumber = "$conCode$phone"
+                Log.d("fullNumber", "full number: $fullNumber")
+                Log.d("phone", "number: $phone")
+                //validate phone number
+                if (TextUtils.isEmpty(fullNumber)) {
+                    Toast.makeText(context, "Phone Number", Toast.LENGTH_SHORT)
+                        .show()
+
+                } else {
+                    startPhoneNumberVerification(fullNumber)
+                }
+            }
+
+            //Resend Code
+            binding.resend.setOnClickListener {
+
+                if (disable == true) {
+                    Log.d("fullNumber", "full number: $fullNumber")
+                    Log.d("phone", "full number: $phone")
+                    //validate phone number
+
+                    resendVerificationCode(fullNumber, forceResendingToken)
+                    disable = false
+                }
+            }
+
+
+            //Verify
+            binding.verifyBtn.setOnClickListener {
+                val code = binding.otpView.otp?.trim()
+                if (TextUtils.isEmpty(code)) {
+                    binding.otpView.showError()
+                    Toast.makeText(context, "Please Enter OTP", Toast.LENGTH_SHORT).show()
+                } else {
+                    verifyPhoneNumberWithCode(mVerificationId, code!!)
+                }
+            }
+        }
+    }
+
+    private fun startPhoneNumberVerification(fullNumber: String) {
+        progressDialog.setMessage("Verifying Phone Number...")
+        progressDialog.show()
+
+
+        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
+            .setPhoneNumber(fullNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(context as Activity)
+            .setCallbacks(mCollBacks!!)
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun resendVerificationCode(
+        fullNumber: String,
+        token: PhoneAuthProvider.ForceResendingToken?
+    ) {
+        progressDialog.setMessage("Resending Code...")
+        progressDialog.show()
+
+        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
+            .setPhoneNumber(fullNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(context as Activity)
+            .setCallbacks(mCollBacks!!)
+            .setForceResendingToken(token!!)
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
+        progressDialog.setMessage("Verifying Code...")
+        progressDialog.show()
+
+        val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
+        signInWithPhoneAuthCredential(credential)
+
+    }
+
+    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        progressDialog.setMessage("Logging In...")
+
+
+        firebaseAuth.signInWithCredential(credential)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                val phone = firebaseAuth.currentUser!!.phoneNumber
+                Toast.makeText(context, "Logged in as $phone", Toast.LENGTH_SHORT).show()
+                timer.cancel()
+
+                if (phone != null) {
+                    checkIfUserIsExisting(phone)
+                }
+                //Navigation.findNavController(requireView()).navigate(R.id.profileFragment)
+//-------------
+//                var ref = FirebaseDatabase.getInstance().getReference("userProfileData")
+//                    .child(phoneCurrentUser)
+//                ref.addListenerForSingleValueEvent(object : ValueEventListener {
+//                    @SuppressLint("ResourceType")
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        if (snapshot.exists()) {
+//                            Toast.makeText(context, "$phone exists", Toast.LENGTH_SHORT).show()
+//                            Navigation.findNavController(view!!).navigate(R.id.homeFeed)
+//                            findNavController().navigate(R.navigation.home_nav)
+//
+//                        } else {
+//                            Toast.makeText(context, "$phone not exists", Toast.LENGTH_SHORT).show()
+//
+//                                findNavController().navigate(R.id.profileFragment)
+//
+//                            Navigation.findNavController(view!!).navigate(R.id.authFragment)
+//
+//                        }
+//                    }
+//
+//                    override fun onCancelled(error: DatabaseError) {
+//                        Toast.makeText(context, "Error occured!", Toast.LENGTH_SHORT).show()
+//                    }
+//                })
+
+
+                // -----------------------
+
+
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                binding.otpView.showError()
+                binding.otpView.requestFocus()
+            }
+    }
+
+    private fun checkIfUserIsExisting(s:String) {
+        firestore= FirebaseFirestore.getInstance()
+
+        firestore.collection("Users").document(s).get()
+            .addOnSuccessListener {
+                if (it.data==null) {
+                    findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
+                } else {
+                    OfflineStorage.setProfileData(requireContext(),true)
+//                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+
+                }
+
+
+            }
+    }
+
+
+    inner class MyCounter(millisInFuture: Long, countDownInterval: Long) :
+        CountDownTimer(millisInFuture, countDownInterval) {
+
+        override fun onFinish() {
+            println("Timer Completed.")
+            disable = true
+            resend.text = "Resend"
+        }
+
+        override fun onTick(millisUntilFinished: Long) {
+
+            resend.text = (millisUntilFinished / 1000).toString() + "sec"
+            println("Timer  : " + millisUntilFinished / 1000)
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
