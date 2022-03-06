@@ -91,7 +91,6 @@ android:background="@drawable/topicsbackground"
                 <TextView
                     android:layout_width="111dp"
                     android:layout_height="22dp"
-                    android:constraintTop_toBottomOf="@+id/gender"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Start"

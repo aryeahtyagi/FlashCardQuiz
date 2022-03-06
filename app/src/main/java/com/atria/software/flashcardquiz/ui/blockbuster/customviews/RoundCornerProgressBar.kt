@@ -7,8 +7,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.annotation.FloatRange
+import androidx.core.animation.doOnEnd
 import com.atria.software.flashcardquiz.R
 
 /**
@@ -20,6 +22,8 @@ class RoundCornerProgressBar @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
+
+    private val TAG = "RoundCornerProgressBar"
 
     companion object {
         private const val DEFAULT_STROKE_WIDTH: Float = 3F
@@ -113,13 +117,25 @@ class RoundCornerProgressBar @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setSmoothProgress(@FloatRange(from = 0.0, to = 1.0) progress: Float, duration: Long = 1000) {
-        val valueAnimator = ValueAnimator
+    private var valueAnimator : ValueAnimator? = null
+
+    fun stopSmoothProgress(){
+        if(valueAnimator != null){
+            valueAnimator?.pause()
+        }
+    }
+
+    fun setSmoothProgress(@FloatRange(from = 0.0, to = 1.0) progress: Float, duration: Long = 1000,doOnEnd:()->Unit) {
+        valueAnimator = ValueAnimator
             .ofFloat(this.progress, progress)
             .setDuration(duration)
-        valueAnimator.addUpdateListener { animation ->
+        valueAnimator?.addUpdateListener { animation ->
             setProgress(animation.animatedValue as Float)
         }
-        valueAnimator.start()
+        valueAnimator?.start()
+        valueAnimator?.doOnEnd {
+            valueAnimator = null
+            doOnEnd()
+        }
     }
 }

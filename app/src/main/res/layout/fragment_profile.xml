@@ -155,8 +155,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                tools:ignore="RtlCompat"
-                android:constraintTop_toBottomOf="@+id/gender" />
+                tools:ignore="RtlCompat" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
