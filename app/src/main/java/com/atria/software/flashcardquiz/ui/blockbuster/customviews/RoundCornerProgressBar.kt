@@ -125,6 +125,12 @@ class RoundCornerProgressBar @JvmOverloads constructor(
         }
     }
 
+    fun resumeSmoothProgress(){
+        if(valueAnimator!=null){
+            valueAnimator?.resume()
+        }
+    }
+
     fun setSmoothProgress(@FloatRange(from = 0.0, to = 1.0) progress: Float, duration: Long = 1000,doOnEnd:()->Unit) {
         valueAnimator = ValueAnimator
             .ofFloat(this.progress, progress)

@@ -88,12 +88,15 @@ class QuizFragmentViewModel(
             _binding?.choiceLayout
         )
         _binding?.cardView?.setOnClickListener {
+            progressBar?.stopSmoothProgress()
             answerRequestVisibilityBucket.forEach { it?.visibility = View.VISIBLE }
         }
 
         _binding?.rightAnswerButton?.setOnClickListener {
             val current_value = question_no.value ?: 0
             hideViews(_binding)
+            end_progress = 0f
+            setProgress(progressBar)
             question_no.postValue(current_value.plus(1))
         }
 
