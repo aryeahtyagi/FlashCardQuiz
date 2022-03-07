@@ -16,30 +16,35 @@ import kotlin.collections.HashMap
 
 class QuizFragmentViewModel(
     private var binding: FragmentQuizBinding? = null,
-    private val viewLifecycleOwner: LifecycleOwner
+    private val viewLifecycleOwner: LifecycleOwner,
+    private val topic: String = "",
+    private val questionsPairList : List<Pair<String, String>> ,
 ) : ViewModel() {
 
-    companion object{
+    companion object {
         private const val TAG = "QuizFragmentViewModel"
     }
 
     private val duration = 10_000L;// 30 sec
     private lateinit var questions: List<Pair<String, String>>
-     val question_no = MutableLiveData<Int>(1);
+    val question_no = MutableLiveData<Int>(1);
+
+    val wrongQuestionsPairList = mutableListOf<Pair<String, String>>()
 
     private val wrongQuestionsIndexList = mutableListOf<Int>()
     private var wrongQuestionsCount = 0
 
     @helper.ViewFunctions
-    var resultCallback = MutableLiveData<helper.Report>(helper.Report())
+    var resultCallback = MutableLiveData<helper.Report>(null)
         get() = field
 
-    private var progressBar : RoundCornerProgressBar ? = null
+    private var progressBar: RoundCornerProgressBar? = null
 
     var end_progress = 0f
+
     @helper.ViewFunctions
     fun setProgress(bar: RoundCornerProgressBar?) {
-        if(progressBar !=  null){
+        if (progressBar != null) {
             bar?.stopSmoothProgress()
         }
         progressBar = bar
@@ -54,12 +59,12 @@ class QuizFragmentViewModel(
     }
 
 
-    fun onObserveTask(it:Int,_binding: FragmentQuizBinding?){
+    fun onObserveTask(it: Int, _binding: FragmentQuizBinding?) {
         Log.i(TAG, "setup: ")
         if (questions.size < it) {
             // here all questions are completed
             val report =
-                helper.Report(wrongQuestionsCount, wrongQuestionsIndexList, questions.size)
+                helper.Report(wrongQuestionsCount, wrongQuestionsIndexList, questions.size, topic,wrongQuestionsPairList)
             Log.i(TAG, report.toString())
             resultCallback.postValue(report)
         } else {
@@ -70,9 +75,9 @@ class QuizFragmentViewModel(
     }
 
 
-    fun setup(_binding:FragmentQuizBinding?,onViewObserver:()->Unit) {
-        if(progressBar!=null){
-            end_progress = progressBar?.getProgress()?:0f
+    fun setup(_binding: FragmentQuizBinding?, onViewObserver: () -> Unit) {
+        if (progressBar != null) {
+            end_progress = progressBar?.getProgress() ?: 0f
         }
         progressBar = _binding?.progressBar
         questions = getQuestionsListFromDatabase() {
@@ -102,7 +107,11 @@ class QuizFragmentViewModel(
 
         _binding?.wrongAnswerButton?.setOnClickListener {
             wrongQuestionsCount += 1
-            question_no.value?.let { it1 -> wrongQuestionsIndexList.add(it1) }
+            question_no.value?.let { it1 ->
+                wrongQuestionsIndexList.add(it1)
+                wrongQuestionsPairList.add(questions[it1-1])
+
+            }
             val current_value = question_no.value ?: 0
             hideViews(_binding)
             question_no.postValue(current_value.plus(1))
@@ -112,7 +121,7 @@ class QuizFragmentViewModel(
     }
 
     @helper.ViewFunctions
-    private fun hideViews(_binding: FragmentQuizBinding?){
+    private fun hideViews(_binding: FragmentQuizBinding?) {
         val answerRequestVisibilityBucket = listOf(
             _binding?.answerTextView,
             _binding?.choiceLayout
@@ -131,14 +140,8 @@ class QuizFragmentViewModel(
 
 
     private fun getQuestionsListFromDatabase(onFetched: () -> Unit): List<Pair<String, String>> {
-        return listOf(
-            Pair("Question 1 testing", "Answer 1 testing"),
-            Pair("Question 2 testing", "Answer 2 testing"),
-            Pair("Question 3 testing", "Answer 3 testing"),
-            Pair("Question 4 testing", "Answer 4 testing"),
-            Pair("Question 5 testing", "Answer 5 testing"),
-            Pair("Question 6 testing", "Answer 6 testing"),
-        ).also {
+        return questionsPairList
+            .also {
             onFetched()
         }
     }
@@ -148,11 +151,13 @@ class QuizFragmentViewModel(
 
 class QuizFragmentViewModelFactory(
     private val binding: FragmentQuizBinding,
-    private val viewLifecycleOwner: LifecycleOwner
+    private val viewLifecycleOwner: LifecycleOwner,
+    private val topic: String,
+    private val questionsPairList : List<Pair<String, String>>
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return QuizFragmentViewModel(binding, viewLifecycleOwner) as T
+        return QuizFragmentViewModel(binding, viewLifecycleOwner, topic,questionsPairList) as T
     }
 
 }

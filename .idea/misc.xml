@@ -10,6 +10,7 @@
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/drawable/ic_wallpaper.xml" value="0.13" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/drawable/ic_wrong_btn.xml" value="0.13" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout-v26/fragment_quiz.xml" value="0.2" />
+        <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout-v26/fragment_quiz_wrong_report.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/bubbles_effect.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_confirm_quiz.xml" value="0.22826086956521738" />
@@ -17,6 +18,7 @@
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_otp.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_profile.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_quiz.xml" value="0.176" />
+        <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_quiz_wrong_report.xml" value="0.2" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_result.xml" value="0.25" />
         <entry key="..\:/Users/aryea/AndroidStudioProjects/FlashCardQuiz/app/src/main/res/layout/fragment_subject.xml" value="0.22826086956521738" />
         <entry key="app/src/main/res/drawable/buttonbackground.xml" value="0.187" />

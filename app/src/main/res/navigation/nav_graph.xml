@@ -33,9 +33,13 @@
     </fragment>
     <fragment
         android:id="@+id/confirmQuizFragment"
-        android:name="com.atria.software.flashcardquiz.ui.flightmaster.ConfirmQuizFragment"
+        android:name="com.atria.software.flashcardquiz.ui.blockbuster.ConfirmQuizFragment"
         android:label="fragment_confirm_quiz"
-        tools:layout="@layout/fragment_confirm_quiz" />
+        tools:layout="@layout/fragment_confirm_quiz" >
+        <action
+            android:id="@+id/action_confirmQuizFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
     <fragment
         android:id="@+id/subjectFragment"
         android:name="com.atria.software.flashcardquiz.ui.flightmaster.SubjectFragment"
@@ -45,12 +49,32 @@
         android:id="@+id/quizFragment"
         android:name="com.atria.software.flashcardquiz.ui.blockbuster.QuizFragment"
         android:label="fragment_quiz"
-        tools:layout="@layout/fragment_quiz" />
+        tools:layout="@layout/fragment_quiz" >
+        <action
+            android:id="@+id/action_quizFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.atria.software.flashcardquiz.ui.blockbuster.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
+        <action
+            android:id="@+id/action_resultFragment_to_quizWrongReportFragment"
+            app:destination="@id/quizWrongReportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizWrongReportFragment"
+        android:name="com.atria.software.flashcardquiz.ui.blockbuster.QuizWrongReportFragment"
+        android:label="fragment_quiz_wrong_report"
+        tools:layout="@layout/fragment_quiz_wrong_report" >
+        <action
+            android:id="@+id/action_quizWrongReportFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.atria.software.flashcardquiz.SplashFragment"
@@ -71,4 +95,5 @@
         android:name="com.atria.software.flashcardquiz.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+
 </navigation>
