@@ -66,7 +66,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (isUserLoggedIn) {
-//            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         } else{
             firebaseAuth = FirebaseAuth.getInstance()
 // set this to remove reCaptcha web
@@ -76,8 +76,8 @@ class LoginFragment : Fragment() {
             if (firebaseAuth.currentUser != null && context != null) {
 
                 if (getProfileData(requireContext())) {
-//                    Navigation.findNavController(requireView())
-//                        .navigate(R.id.action_loginFragment_to_homeFragment)
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_loginFragment_to_homeFragment)
                 } else {
 
                 }
@@ -226,7 +226,7 @@ class LoginFragment : Fragment() {
                 if (phone != null) {
                     checkIfUserIsExisting(phone)
                 }
-                //Navigation.findNavController(requireView()).navigate(R.id.profileFragment)
+//                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_profileFragment)
 //-------------
 //                var ref = FirebaseDatabase.getInstance().getReference("userProfileData")
 //                    .child(phoneCurrentUser)
@@ -268,14 +268,15 @@ class LoginFragment : Fragment() {
     private fun checkIfUserIsExisting(s:String) {
         firestore= FirebaseFirestore.getInstance()
 
+        Log.i("check if user fun", "checkIfUserIsExisting: ")
         firestore.collection("Users").document(s).get()
             .addOnSuccessListener {
                 if (it.data==null) {
                     findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
                 } else {
                     OfflineStorage.setProfileData(requireContext(),true)
-//                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    // change to home fragment later |
                 }
 
 
