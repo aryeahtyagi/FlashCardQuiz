@@ -31,11 +31,12 @@
             android:id="@+id/profileImage"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="168dp"
             android:src="@drawable/ic_baseline_person_24"
-            app:civ_border_color="@color/white"
+            app:civ_border_color="@color/grey"
             app:civ_border_width="3dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,57 +46,60 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/card_border"
             android:ems="10"
-            android:hint="  full name"
+            android:padding="10dp"
+            android:hint="School name"
             android:inputType="textPersonName"
             android:paddingVertical="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="#d3d3d3"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+            app:layout_constraintTop_toBottomOf="@id/userName"/>
 
         <EditText
-            android:id="@+id/schoolName"
+            android:id="@+id/userName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
+            android:padding="10dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/card_border"
             android:digits="abcdefghijklmnopqrstuvwxyz1234567890._"
             android:ems="10"
-            android:hint="  school Name"
+            android:hint="User Name"
             android:inputType="textFilter"
             android:paddingVertical="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="#d3d3d3"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
+            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
         <EditText
-            android:id="@+id/grade"
+            android:id="@+id/name2"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/card_border"
-            android:ems="10"
-            android:hint="  grade"
+            android:ems="6"
+            android:padding="10dp"
+            android:hint="Grade"
             android:inputType="phone"
             android:paddingVertical="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="#d3d3d3"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/schoolName" />
+            app:layout_constraintTop_toBottomOf="@+id/name" />
 
         <RadioGroup
             android:id="@+id/gender"
@@ -104,9 +108,9 @@
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/grade"
-            app:layout_constraintStart_toStartOf="@+id/grade"
-            app:layout_constraintTop_toBottomOf="@+id/grade">
+            app:layout_constraintEnd_toEndOf="@+id/name2"
+            app:layout_constraintStart_toStartOf="@+id/name2"
+            app:layout_constraintTop_toBottomOf="@+id/name2">
 
             <RadioButton
                 android:id="@+id/radioButton"
