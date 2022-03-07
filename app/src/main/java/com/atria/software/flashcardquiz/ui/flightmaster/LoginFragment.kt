@@ -70,7 +70,6 @@ class LoginFragment : Fragment() {
         } else{
             firebaseAuth = FirebaseAuth.getInstance()
 // set this to remove reCaptcha web
-            firebaseAuth.getFirebaseAuthSettings().setAppVerificationDisabledForTesting(true);
 
 
             if (firebaseAuth.currentUser != null && context != null) {
