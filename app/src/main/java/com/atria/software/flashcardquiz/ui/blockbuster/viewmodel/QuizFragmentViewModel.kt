@@ -76,6 +76,13 @@ class QuizFragmentViewModel(
 
 
     fun setup(_binding: FragmentQuizBinding?, onViewObserver: () -> Unit) {
+        question_no.value = 1
+        wrongQuestionsPairList.clear()
+        wrongQuestionsIndexList.clear()
+        wrongQuestionsCount = 0
+        resultCallback.value = null
+        end_progress = 0f
+
         if (progressBar != null) {
             end_progress = progressBar?.getProgress() ?: 0f
         }
@@ -107,6 +114,8 @@ class QuizFragmentViewModel(
 
         _binding?.wrongAnswerButton?.setOnClickListener {
             wrongQuestionsCount += 1
+            end_progress = 0f
+            setProgress(progressBar)
             question_no.value?.let { it1 ->
                 wrongQuestionsIndexList.add(it1)
                 wrongQuestionsPairList.add(questions[it1-1])

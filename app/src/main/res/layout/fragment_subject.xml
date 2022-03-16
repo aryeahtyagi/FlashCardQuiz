@@ -23,15 +23,16 @@
         android:id="@+id/quiz"
         android:layout_width="102dp"
         android:layout_height="60dp"
-        android:layout_marginTop="16dp"
         android:fontFamily="@font/charmonman_bold"
         android:text="Quiz:"
         android:textColor="@color/black"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037" />
 
     <TextView
         android:id="@+id/subjectNameTextView"
@@ -42,17 +43,23 @@
         android:text="Civics"
         android:textColor="@color/white"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quiz" />
+        app:layout_constraintTop_toBottomOf="@id/quiz"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/topicsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="604dp"
+        android:layout_height="0dp"
+        android:background="@color/color_bg"
         app:layout_constraintBottom_toBottomOf="@+id/include"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subjectNameTextView"
         app:layout_constraintVertical_bias="0.049"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:listitem="@layout/topic_cards" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

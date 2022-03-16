@@ -11,11 +11,9 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fromleft" />
     </fragment>
     <fragment
         android:id="@+id/otpFragment"
@@ -23,28 +21,25 @@
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp" />
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.atria.software.flashcardquiz.ui.flightmaster.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/confirmQuizFragment"
         android:name="com.atria.software.flashcardquiz.ui.blockbuster.ConfirmQuizFragment"
         android:label="fragment_confirm_quiz"
         tools:layout="@layout/fragment_confirm_quiz" >
         <action
             android:id="@+id/action_confirmQuizFragment_to_quizFragment"
-            app:destination="@id/quizFragment" />
+            app:destination="@id/quizFragment"
+            app:enterAnim="@anim/fromleft" />
     </fragment>
     <fragment
         android:id="@+id/subjectFragment"
         android:name="com.atria.software.flashcardquiz.ui.flightmaster.SubjectFragment"
         android:label="fragment_subject"
-        tools:layout="@layout/fragment_subject" />
+        tools:layout="@layout/fragment_subject" >
+        <action
+            android:id="@+id/action_subjectFragment_to_confirmQuizFragment"
+            app:destination="@id/confirmQuizFragment"
+            app:enterAnim="@anim/fromleft" />
+    </fragment>
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.atria.software.flashcardquiz.ui.blockbuster.QuizFragment"
@@ -52,7 +47,8 @@
         tools:layout="@layout/fragment_quiz" >
         <action
             android:id="@+id/action_quizFragment_to_resultFragment"
-            app:destination="@id/resultFragment" />
+            app:destination="@id/resultFragment"
+            app:enterAnim="@anim/fromleft" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
@@ -60,11 +56,14 @@
         android:label="fragment_result"
         tools:layout="@layout/fragment_result" >
         <action
-            android:id="@+id/action_resultFragment_to_subjectFragment"
-            app:destination="@id/subjectFragment" />
-        <action
             android:id="@+id/action_resultFragment_to_quizWrongReportFragment"
-            app:destination="@id/quizWrongReportFragment" />
+            app:destination="@id/quizWrongReportFragment"
+            app:enterAnim="@anim/fromleft"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_resultFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fromleft" />
     </fragment>
     <fragment
         android:id="@+id/quizWrongReportFragment"
@@ -72,8 +71,8 @@
         android:label="fragment_quiz_wrong_report"
         tools:layout="@layout/fragment_quiz_wrong_report" >
         <action
-            android:id="@+id/action_quizWrongReportFragment_to_subjectFragment"
-            app:destination="@id/subjectFragment" />
+            android:id="@+id/action_quizWrongReportFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -84,9 +83,6 @@
             android:id="@+id/action_splashFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_splashFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
@@ -94,6 +90,11 @@
         android:id="@+id/homeFragment"
         android:name="com.atria.software.flashcardquiz.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment"
+            app:enterAnim="@anim/fromleft" />
+    </fragment>
 
 </navigation>

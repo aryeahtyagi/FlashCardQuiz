@@ -271,7 +271,7 @@ class LoginFragment : Fragment() {
         firestore.collection("Users").document(s).get()
             .addOnSuccessListener {
                 if (it.data==null) {
-                    findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 } else {
                     OfflineStorage.setProfileData(requireContext(),true)
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)

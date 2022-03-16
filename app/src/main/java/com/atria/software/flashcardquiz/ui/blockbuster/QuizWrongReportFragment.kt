@@ -40,7 +40,7 @@ class QuizWrongReportFragment : Fragment() {
                 binding.answerTextView.text = report?.wrongAnswersPair?.get(it)?.second
                 binding.questionNumber.text = it.plus(1).toString() + "/" + report?.wrongQuestionsNo
             }else{
-                findNavController().navigate(R.id.action_quizWrongReportFragment_to_subjectFragment)
+                findNavController().navigate(R.id.action_quizWrongReportFragment_to_homeFragment)
             }
         }
 

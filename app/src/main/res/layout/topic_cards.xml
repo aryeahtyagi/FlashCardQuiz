@@ -7,6 +7,8 @@ android:layout_width="match_parent"
 android:layout_height="70dp"
 app:cardElevation="8dp"
 android:layout_margin="8dp"
+    app:cardBackgroundColor="@color/color_bg"
+    android:backgroundTint="@color/color_bg"
 android:background="@drawable/topicsbackground"
 
 >
@@ -45,6 +47,7 @@ android:background="@drawable/topicsbackground"
             >
 
             <TextView
+                android:id="@+id/topicNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
@@ -54,6 +57,7 @@ android:background="@drawable/topicsbackground"
                 />
 
             <TextView
+                android:id="@+id/questionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/amiko"
@@ -65,6 +69,7 @@ android:background="@drawable/topicsbackground"
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/topicStartButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 

@@ -38,30 +38,35 @@ class QuizFragment : Fragment() {
         }
         quizFragmentBinding?.let {
             Log.i(TAG, "onViewCreated: $quizFragmentViewModel")
-            quizFragmentViewModel =
-                ViewModelProvider(
-                    requireActivity(),
-                    QuizFragmentViewModelFactory(
-                        it,
-                        viewLifecycleOwner,
-                        report?.subjectName?:"",
-                        //TODO : Populate list with questions
-                        listOf()
-                    )
-                ).get(QuizFragmentViewModel::class.java)
+            if (report != null) {
+                quizFragmentViewModel =
+                    ViewModelProvider(
+                        requireActivity(),
+                        QuizFragmentViewModelFactory(
+                            it,
+                            viewLifecycleOwner,
+                            report?.subjectName ?: "",
+                            //TODO : Populate list with questions
+                            report?.wrongAnswersPair!!
+                        )
+                    ).get(QuizFragmentViewModel::class.java)
 
-            quizFragmentViewModel?.setup(_binding = quizFragmentBinding){
-                quizFragmentViewModel?.question_no?.observe(viewLifecycleOwner) {
-                    quizFragmentViewModel?.onObserveTask(it,quizFragmentBinding)
+                quizFragmentViewModel?.setup(_binding = quizFragmentBinding) {
+                    quizFragmentViewModel?.question_no?.observe(viewLifecycleOwner) {
+                        quizFragmentViewModel?.onObserveTask(it, quizFragmentBinding)
+                    }
                 }
-            }
-            quizFragmentViewModel?.setProgress(it.progressBar)
+                quizFragmentViewModel?.setProgress(it.progressBar)
 
-            quizFragmentViewModel?.resultCallback?.observe(viewLifecycleOwner){
-                if(it != null) {
-                    val report = Bundle()
-                    report.putSerializable(reportString, it)
-                    findNavController().navigate(R.id.action_quizFragment_to_resultFragment,report)
+                quizFragmentViewModel?.resultCallback?.observe(viewLifecycleOwner) {
+                    if (it != null) {
+                        val report = Bundle()
+                        report.putSerializable(reportString, it)
+                        findNavController().navigate(
+                            R.id.action_quizFragment_to_resultFragment,
+                            report
+                        )
+                    }
                 }
             }
         }

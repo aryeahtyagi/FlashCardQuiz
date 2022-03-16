@@ -188,7 +188,7 @@ class ProfileFragment : Fragment() {
                             setProfile(true)
                             Log.i("user saved", "saveUserProfileData: ")
                             //Navigation.findNavController(requireView()).navigate(R.id.home_nav)
-                            findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+
 
                         }.addOnFailureListener {
                             Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
@@ -222,7 +222,6 @@ class ProfileFragment : Fragment() {
 
     private fun setProfile(b: Boolean) {
         setProfileData(requireContext(), b)
-
     }
 
     private fun fetchProfiles(username: String) {
@@ -308,7 +307,6 @@ class ProfileFragment : Fragment() {
                             //Navigation.findNavController(requireView()).navigate(R.id.home_nav)
                             setProfile(true)
 
-                            findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
                         }.addOnFailureListener {
                             Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
                             if (progressDialog.isShowing) progressDialog.dismiss()
@@ -370,7 +368,6 @@ class ProfileFragment : Fragment() {
             binding.profileImage.setImageURI(selectedProfileUri)
         }
     }
-
 
     private fun checkField(textField: EditText): Boolean {
         if (textField.text.toString().isEmpty()) {

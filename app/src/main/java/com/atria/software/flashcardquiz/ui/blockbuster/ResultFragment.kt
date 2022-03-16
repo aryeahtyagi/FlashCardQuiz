@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.atria.software.flashcardquiz.R
 import com.atria.software.flashcardquiz.databinding.FragmentResultBinding
@@ -36,7 +37,7 @@ class ResultFragment : Fragment() {
         }
 
         binding.finishQuizButton.setOnClickListener {
-            findNavController().navigate(R.id.action_resultFragment_to_subjectFragment)
+            findNavController().navigate(R.id.action_resultFragment_to_homeFragment)
         }
 
         binding.checkWrongAnswersButton.setOnClickListener {
@@ -46,5 +47,6 @@ class ResultFragment : Fragment() {
         }
 
     }
+
 
 }
